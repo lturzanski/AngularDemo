@@ -1,0 +1,102 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "data": "${state}",
+                  "events": {
+                    "cancel": [
+                      {
+                        "type": "back"
+                      }
+                    ],
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update State",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "StateExclusionsDatabase.updateState",
+                        "parameters": [
+                          {
+                            "name": "Id",
+                            "value": "${parameters.Id}"
+                          },
+                          {
+                            "name": "State",
+                            "value": "${event}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "back"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
+                    "loadData": []
+                  },
+                  "fields": [
+                    {
+                      "property": "StateName",
+                      "required": true,
+                      "title": "State Name",
+                      "type": "string"
+                    },
+                    {
+                      "property": "StateAbbreviation",
+                      "required": true,
+                      "title": "State Abbreviation",
+                      "type": "string"
+                    }
+                  ],
+                  "name": "form0",
+                  "type": "form",
+                  "visible": "state"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "StateExclusionsDatabase.getStateById",
+        "parameters": [
+          {
+            "name": "Id",
+            "value": "${parameters.Id}"
+          }
+        ],
+        "then": [
+          {
+            "name": "state",
+            "type": "set",
+            "value": "${result}"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit State",
+  "layout": "Main"
+}

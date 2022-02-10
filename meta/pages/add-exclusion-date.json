@@ -1,0 +1,160 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "data": "",
+                  "events": {
+                    "cancel": [
+                      {
+                        "type": "back"
+                      }
+                    ],
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new ExclusionDate!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "StateExclusionsDatabase.createExclusionDate",
+                        "parameters": [
+                          {
+                            "name": "ExclusionDate",
+                            "value": "${event}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "back"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
+                    "loadData": [
+                      {
+                        "name": "StateExclusionsDatabase.getExclusions",
+                        "condition": "event.property == 'ExclusionId'",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "${event.top}"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "${event.skip}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": "${event.filter}"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "true"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getExclusionsForExclusionIdResult",
+                            "type": "set",
+                            "value": "${result.value}"
+                          },
+                          {
+                            "name": "getExclusionsForExclusionIdCount",
+                            "type": "set",
+                            "value": "result['@odata.count']"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "fields": [
+                    {
+                      "property": "Date",
+                      "required": true,
+                      "title": "Date",
+                      "type": "date"
+                    },
+                    {
+                      "data": "${getExclusionsForExclusionIdResult}",
+                      "property": "ExclusionId",
+                      "required": true,
+                      "textProperty": "ExclusionName",
+                      "title": "Exclusion",
+                      "type": "lookuppopup",
+                      "valueProperty": "Id",
+                      "placeholder": "Choose Exclusion",
+                      "count": "${getExclusionsForExclusionIdCount}",
+                      "pageSize": "${getExclusionsForExclusionIdPageSize}"
+                    }
+                  ],
+                  "name": "form0",
+                  "type": "form"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "getExclusionsForExclusionIdPageSize",
+        "type": "set",
+        "value": "10"
+      },
+      {
+        "name": "StateExclusionsDatabase.getExclusions",
+        "parameters": [
+          {
+            "name": "$top",
+            "value": "${getExclusionsForExclusionIdPageSize}"
+          },
+          {
+            "name": "$skip",
+            "value": "0"
+          },
+          {
+            "name": "$count",
+            "value": "true"
+          }
+        ],
+        "then": [
+          {
+            "name": "getExclusionsForExclusionIdResult",
+            "type": "set",
+            "value": "${result.value}"
+          },
+          {
+            "name": "getExclusionsForExclusionIdCount",
+            "type": "set",
+            "value": "result['@odata.count']"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Add Exclusion Date",
+  "layout": "Main"
+}

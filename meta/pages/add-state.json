@@ -1,0 +1,78 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "data": "",
+                  "events": {
+                    "cancel": [
+                      {
+                        "type": "back"
+                      }
+                    ],
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new State!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "StateExclusionsDatabase.createState",
+                        "parameters": [
+                          {
+                            "name": "State",
+                            "value": "${event}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "back"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
+                    "loadData": []
+                  },
+                  "fields": [
+                    {
+                      "property": "StateName",
+                      "required": true,
+                      "title": "State Name",
+                      "type": "string"
+                    },
+                    {
+                      "property": "StateAbbreviation",
+                      "required": true,
+                      "title": "State Abbreviation",
+                      "type": "string"
+                    }
+                  ],
+                  "name": "form0",
+                  "type": "form"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": []
+  },
+  "name": "Add State",
+  "layout": "Main"
+}

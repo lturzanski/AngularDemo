@@ -1,0 +1,12 @@
+<rz-content #content1 container="main">
+  <div class="row">
+    <div class="col-md-12">
+      <rz-form #form0 (cancel)="form0Cancel($event)" (submit)="form0Submit($event)" (loadData)="form0LoadData($event)">
+        <rz-lookuppopup-form-field [data]="getStatesForStateIdResult" property="StateId" [required]="true" textProperty="StateName" title="State" valueProperty="Id" placeholder="Choose State" [count]="getStatesForStateIdCount" [pageSize]="getStatesForStateIdPageSize" requiredText="is required" type="lookuppopup">
+        </rz-lookuppopup-form-field>
+        <rz-lookuppopup-form-field [data]="getExclusionsForExclusionIdResult" property="ExclusionId" [required]="true" textProperty="ExclusionName" title="Exclusion" valueProperty="Id" placeholder="Choose Exclusion" [count]="getExclusionsForExclusionIdCount" [pageSize]="getExclusionsForExclusionIdPageSize" requiredText="is required" type="lookuppopup">
+        </rz-lookuppopup-form-field>
+      </rz-form>
+    </div>
+  </div>
+</rz-content>

@@ -1,0 +1,202 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "data": "${exclusiondate}",
+                  "events": {
+                    "cancel": [
+                      {
+                        "type": "back"
+                      }
+                    ],
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update ExclusionDate",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "StateExclusionsDatabase.updateExclusionDate",
+                        "parameters": [
+                          {
+                            "name": "Id",
+                            "value": "${parameters.Id}"
+                          },
+                          {
+                            "name": "ExclusionDate",
+                            "value": "${event}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "back"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
+                    "loadData": [
+                      {
+                        "name": "StateExclusionsDatabase.getExclusions",
+                        "condition": "event.property == 'ExclusionId'",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "${event.top}"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "${event.skip}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": "${event.filter}"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "true"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getExclusionsForExclusionIdResult",
+                            "type": "set",
+                            "value": "${result.value}"
+                          },
+                          {
+                            "name": "getExclusionsForExclusionIdCount",
+                            "type": "set",
+                            "value": "result['@odata.count']"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "fields": [
+                    {
+                      "property": "Date",
+                      "required": true,
+                      "title": "Date",
+                      "type": "date"
+                    },
+                    {
+                      "data": "${getExclusionsForExclusionIdResult}",
+                      "property": "ExclusionId",
+                      "required": true,
+                      "textProperty": "ExclusionName",
+                      "title": "Exclusion",
+                      "type": "lookuppopup",
+                      "valueProperty": "Id",
+                      "placeholder": "Choose Exclusion",
+                      "count": "${getExclusionsForExclusionIdCount}",
+                      "pageSize": "${getExclusionsForExclusionIdPageSize}",
+                      "value": "${getByExclusionsForExclusionIdResult}"
+                    }
+                  ],
+                  "name": "form0",
+                  "type": "form",
+                  "visible": "exclusiondate"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "StateExclusionsDatabase.getExclusionDateById",
+        "parameters": [
+          {
+            "name": "Id",
+            "value": "${parameters.Id}"
+          }
+        ],
+        "then": [
+          {
+            "name": "exclusiondate",
+            "type": "set",
+            "value": "${result}"
+          },
+          {
+            "name": "StateExclusionsDatabase.getExclusionById",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${this.exclusiondate.ExclusionId}"
+              }
+            ],
+            "then": [
+              {
+                "name": "getByExclusionsForExclusionIdResult",
+                "type": "set",
+                "value": "${result}"
+              }
+            ],
+            "condition": "this.exclusiondate.ExclusionId != null",
+            "type": "invoke"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "getExclusionsForExclusionIdPageSize",
+        "type": "set",
+        "value": "10"
+      },
+      {
+        "name": "StateExclusionsDatabase.getExclusions",
+        "parameters": [
+          {
+            "name": "$top",
+            "value": "${getExclusionsForExclusionIdPageSize}"
+          },
+          {
+            "name": "$skip",
+            "value": "0"
+          },
+          {
+            "name": "$count",
+            "value": "true"
+          }
+        ],
+        "then": [
+          {
+            "name": "getExclusionsForExclusionIdResult",
+            "type": "set",
+            "value": "${result.value}"
+          },
+          {
+            "name": "getExclusionsForExclusionIdCount",
+            "type": "set",
+            "value": "result['@odata.count']"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Exclusion Date",
+  "layout": "Main"
+}

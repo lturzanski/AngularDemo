@@ -1,0 +1,1019 @@
+{
+  "info": {
+    "title": "StateExclusionsDatabase",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15
+  },
+  "definitions": {
+    "Exclusion": {
+      "x-table": "dbo.Exclusions",
+      "resource": "Exclusions",
+      "required": [
+        "ExclusionName",
+        "ExclusionDescription"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Exclusion",
+              "name": "StateExclusions",
+              "type": "StateExclusion"
+            },
+            {
+              "inversePropertyName": "Exclusion",
+              "name": "ExclusionDates",
+              "type": "ExclusionDate"
+            }
+          ]
+        },
+        "ExclusionName": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "ExclusionDescription": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "StateExclusions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StateExclusion"
+          }
+        },
+        "ExclusionDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExclusionDate"
+          }
+        }
+      }
+    },
+    "ExclusionDate": {
+      "x-table": "dbo.ExclusionDates",
+      "resource": "ExclusionDates",
+      "required": [
+        "Date",
+        "ExclusionId"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "Date": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime"
+        },
+        "Exclusion": {
+          "type": "object",
+          "$ref": "#/definitions/Exclusion"
+        },
+        "ExclusionId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Exclusions",
+            "parentEntityType": "Exclusion",
+            "type": "Exclusion",
+            "principalKey": "Id",
+            "name": "Exclusion",
+            "textProperty": "ExclusionName",
+            "navigationProperty": "ExclusionDates"
+          }
+        }
+      }
+    },
+    "State": {
+      "x-table": "dbo.States",
+      "resource": "States",
+      "required": [
+        "StateName",
+        "StateAbbreviation"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "State",
+              "name": "StateExclusions",
+              "type": "StateExclusion"
+            }
+          ]
+        },
+        "StateName": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "StateAbbreviation": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "StateExclusions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StateExclusion"
+          }
+        }
+      }
+    },
+    "StateExclusion": {
+      "x-table": "dbo.StateExclusions",
+      "resource": "StateExclusions",
+      "required": [
+        "StateId",
+        "ExclusionId"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "State": {
+          "type": "object",
+          "$ref": "#/definitions/State"
+        },
+        "StateId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "States",
+            "parentEntityType": "State",
+            "type": "State",
+            "principalKey": "Id",
+            "name": "State",
+            "textProperty": "StateName",
+            "navigationProperty": "StateExclusions"
+          }
+        },
+        "Exclusion": {
+          "type": "object",
+          "$ref": "#/definitions/Exclusion"
+        },
+        "ExclusionId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Exclusions",
+            "parentEntityType": "Exclusion",
+            "type": "Exclusion",
+            "principalKey": "Id",
+            "name": "Exclusion",
+            "textProperty": "ExclusionName",
+            "navigationProperty": "StateExclusions"
+          }
+        }
+      }
+    },
+    "StateExclusionView": {
+      "x-view": true,
+      "x-table": "dbo.StateExclusionView",
+      "resource": "StateExclusionViews",
+      "required": [
+        "StateName",
+        "StateAbbreviation",
+        "StateExclusionId",
+        "ExclusionName",
+        "ExclusionDescription",
+        "Date",
+        "StateId",
+        "ExclusionId",
+        "ExclusionDateId"
+      ],
+      "properties": {
+        "StateName": {
+          "x-nullable": false,
+          "type": "string",
+          "x-key": true,
+          "x-virtual": true
+        },
+        "StateAbbreviation": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "StateExclusionId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "ExclusionName": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "ExclusionDescription": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "Date": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime"
+        },
+        "StateId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "ExclusionId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "ExclusionDateId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Exclusions": {
+      "get": {
+        "operationId": "getExclusions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$select",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Exclusion"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createExclusion",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Exclusion",
+            "schema": {
+              "$ref": "#/definitions/Exclusion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Exclusion"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ExclusionDates": {
+      "get": {
+        "operationId": "getExclusionDates",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$select",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/ExclusionDate"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createExclusionDate",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ExclusionDate",
+            "schema": {
+              "$ref": "#/definitions/ExclusionDate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/ExclusionDate"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/States": {
+      "get": {
+        "operationId": "getStates",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$select",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/State"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createState",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "State",
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StateExclusions": {
+      "get": {
+        "operationId": "getStateExclusions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$select",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StateExclusion"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStateExclusion",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "StateExclusion",
+            "schema": {
+              "$ref": "#/definitions/StateExclusion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StateExclusion"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StateExclusionViews": {
+      "get": {
+        "operationId": "getStateExclusionViews",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$select",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StateExclusionView"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Exclusions({Id})": {
+      "delete": {
+        "operationId": "deleteExclusion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getExclusionById",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Exclusion"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateExclusion",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Exclusion",
+            "schema": {
+              "$ref": "#/definitions/Exclusion"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ExclusionDates({Id})": {
+      "delete": {
+        "operationId": "deleteExclusionDate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getExclusionDateById",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ExclusionDate"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateExclusionDate",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "ExclusionDate",
+            "schema": {
+              "$ref": "#/definitions/ExclusionDate"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/States({Id})": {
+      "delete": {
+        "operationId": "deleteState",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStateById",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateState",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "State",
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StateExclusions({Id})": {
+      "delete": {
+        "operationId": "deleteStateExclusion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStateExclusionById",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StateExclusion"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStateExclusion",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "StateExclusion",
+            "schema": {
+              "$ref": "#/definitions/StateExclusion"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/StateExclusionsDatabase",
+  "host": "localhost:5000",
+  "schemes": [
+    "http"
+  ]
+}

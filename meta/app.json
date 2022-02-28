@@ -1,50 +1,40 @@
 {
-  "cssFiles": [],
   "dataSources": [
-    "StateExclusionsDatabase"
+    "StateExclusions"
   ],
   "generator": "@radzen/angular-generator",
   "https": false,
-  "ignore": [
-    ""
-  ],
-  "javaScriptFiles": [],
   "layouts": [
     "Login",
     "Main"
   ],
   "logo": "",
   "name": "AngularDemo",
-  "namespaces": [],
   "navigation": [
-    "State Exclusion View",
-    "State",
     "Exclusion",
-    "ExclusionDate",
-    "StateExclusion"
+    "State",
+    "Exclusion Date",
+    "State Exclusion Table",
+    "State Exclusion"
   ],
   "pages": [
-    "State Exclusion View",
-    "State",
-    "Add State",
-    "Edit State",
     "Exclusion",
     "Add Exclusion",
     "Edit Exclusion",
-    "ExclusionDate",
-    "Add ExclusionDate",
-    "Edit ExclusionDate",
-    "StateExclusion",
-    "Add StateExclusion",
-    "Edit StateExclusion"
+    "State",
+    "Add State",
+    "Edit State",
+    "Exclusion Date",
+    "Add Exclusion Date",
+    "Edit Exclusion Date",
+    "State Exclusion Table",
+    "State Exclusion",
+    "Add State Exclusion",
+    "Edit State Exclusion"
   ],
-  "port": 8000,
   "serverLang": "cs",
-  "serverPort": 5000,
   "serverProject": true,
   "serverVersion": "5",
-  "startPage": "State Exclusion View",
-  "theme": "software",
-  "themeSettings": null,
-  "title": "AngularDemo"
+  "startPage": "StateExclusionView",
+  "theme": "software"
 }

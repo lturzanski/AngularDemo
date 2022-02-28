@@ -15,7 +15,7 @@ import { FormComponent } from '@radzen/angular/dist/form';
 
 import { ConfigService } from '../config.service';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class AddExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -44,7 +44,7 @@ export class AddExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
+  stateExclusions: StateExclusionsService;
   parameters: any;
 
   constructor(private injector: Injector) {
@@ -71,7 +71,7 @@ export class AddExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -106,7 +106,7 @@ export class AddExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   }
 
   form0Submit(event: any) {
-    this.stateExclusionsDatabase.createExclusion(null, event)
+    this.stateExclusions.createStateExclExclusion(null, event)
     .subscribe((result: any) => {
       if (this.dialogRef) {
         this.dialogRef.close();
@@ -114,7 +114,7 @@ export class AddExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
         this._location.back();
       }
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to create new Exclusion!` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to create new StateExclExclusion!` });
     });
   }
 }

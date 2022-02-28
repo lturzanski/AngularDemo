@@ -12,7 +12,7 @@
               "class": "col-md-12",
               "components": [
                 {
-                  "data": "${exclusion}",
+                  "data": "${stateexclexclusion}",
                   "events": {
                     "cancel": [
                       {
@@ -23,20 +23,20 @@
                       {
                         "error": [
                           {
-                            "detail": "Unable to update Exclusion",
+                            "detail": "Unable to update StateExclExclusion",
                             "severity": "error",
                             "summary": "Error",
                             "type": "notify"
                           }
                         ],
-                        "name": "StateExclusionsDatabase.updateExclusion",
+                        "name": "StateExclusions.updateStateExclExclusion",
                         "parameters": [
                           {
                             "name": "Id",
                             "value": "${parameters.Id}"
                           },
                           {
-                            "name": "Exclusion",
+                            "name": "StateExclExclusion",
                             "value": "${event}"
                           }
                         ],
@@ -55,18 +55,20 @@
                       "property": "ExclusionName",
                       "required": true,
                       "title": "Exclusion Name",
-                      "type": "string"
+                      "type": "string",
+                      "requiredText": "is required"
                     },
                     {
                       "property": "ExclusionDescription",
-                      "required": true,
+                      "required": false,
                       "title": "Exclusion Description",
-                      "type": "string"
+                      "type": "string",
+                      "requiredText": "is required"
                     }
                   ],
                   "name": "form0",
                   "type": "form",
-                  "visible": "exclusion"
+                  "visible": "stateexclexclusion"
                 }
               ]
             }
@@ -78,7 +80,7 @@
   "events": {
     "load": [
       {
-        "name": "StateExclusionsDatabase.getExclusionById",
+        "name": "StateExclusions.getStateExclExclusionById",
         "parameters": [
           {
             "name": "Id",
@@ -87,7 +89,7 @@
         ],
         "then": [
           {
-            "name": "exclusion",
+            "name": "stateexclexclusion",
             "type": "set",
             "value": "${result}"
           }

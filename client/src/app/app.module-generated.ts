@@ -29,35 +29,35 @@ import { AppRoutes } from './app.routes';
 import { AppComponent } from './app.component';
 import { CacheInterceptor } from './cache.interceptor';
 export { AppComponent } from './app.component';
-import { StateExclusionViewComponent } from './state-exclusion-view/state-exclusion-view.component';
-import { StateComponent } from './state/state.component';
-import { AddStateComponent } from './add-state/add-state.component';
-import { EditStateComponent } from './edit-state/edit-state.component';
 import { ExclusionComponent } from './exclusion/exclusion.component';
 import { AddExclusionComponent } from './add-exclusion/add-exclusion.component';
 import { EditExclusionComponent } from './edit-exclusion/edit-exclusion.component';
+import { StateComponent } from './state/state.component';
+import { AddStateComponent } from './add-state/add-state.component';
+import { EditStateComponent } from './edit-state/edit-state.component';
 import { ExclusionDateComponent } from './exclusion-date/exclusion-date.component';
 import { AddExclusionDateComponent } from './add-exclusion-date/add-exclusion-date.component';
 import { EditExclusionDateComponent } from './edit-exclusion-date/edit-exclusion-date.component';
+import { StateExclusionTableComponent } from './state-exclusion-table/state-exclusion-table.component';
 import { StateExclusionComponent } from './state-exclusion/state-exclusion.component';
 import { AddStateExclusionComponent } from './add-state-exclusion/add-state-exclusion.component';
 import { EditStateExclusionComponent } from './edit-state-exclusion/edit-state-exclusion.component';
 import { LoginLayoutComponent } from './login-layout/login-layout.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 
-import { StateExclusionsDatabaseService } from './state-exclusions-database.service';
+import { StateExclusionsService } from './state-exclusions.service';
 
 export const PageDeclarations = [
-  StateExclusionViewComponent,
-  StateComponent,
-  AddStateComponent,
-  EditStateComponent,
   ExclusionComponent,
   AddExclusionComponent,
   EditExclusionComponent,
+  StateComponent,
+  AddStateComponent,
+  EditStateComponent,
   ExclusionDateComponent,
   AddExclusionDateComponent,
   EditExclusionDateComponent,
+  StateExclusionTableComponent,
   StateExclusionComponent,
   AddStateExclusionComponent,
   EditStateExclusionComponent,
@@ -80,7 +80,7 @@ export const AppProviders = [
     useClass: CacheInterceptor,
     multi: true
   },
-  StateExclusionsDatabaseService,
+  StateExclusionsService,
   ConfigService,
   {
     provide: APP_INITIALIZER,

@@ -77,9 +77,9 @@ namespace AngularDemo
 
       services.AddHttpContextAccessor();
 
-      services.AddDbContext<AngularDemo.Data.StateExclusionsDatabaseContext>(options =>
+      services.AddDbContext<AngularDemo.Data.StateExclusionsContext>(options =>
       {
-        options.UseSqlServer(Configuration.GetConnectionString("StateExclusionsDatabaseConnection"));
+        options.UseSqlServer(Configuration.GetConnectionString("StateExclusionsConnection"));
       });
 
       OnConfigureServices(services);
@@ -130,17 +130,17 @@ namespace AngularDemo
 
           var oDataBuilder = new ODataConventionModelBuilder(provider);
 
-          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusionsDatabase.Exclusion>("Exclusions");
-          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusionsDatabase.ExclusionDate>("ExclusionDates");
-          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusionsDatabase.State>("States");
-          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusionsDatabase.StateExclusion>("StateExclusions");
-          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusionsDatabase.StateExclusionView>("StateExclusionViews");
+          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusions.StateExclExclusion>("StateExclExclusions");
+          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusions.StateExclExclusionDate>("StateExclExclusionDates");
+          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusions.StateExclState>("StateExclStates");
+          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusions.StateExclStateExclusion>("StateExclStateExclusions");
+          oDataBuilder.EntitySet<AngularDemo.Models.StateExclusions.StateExclusionView>("StateExclusionViews");
 
           this.OnConfigureOData(oDataBuilder);
 
           var model = oDataBuilder.GetEdmModel();
 
-          builder.MapODataServiceRoute("odata/StateExclusionsDatabase", "odata/StateExclusionsDatabase", model);
+          builder.MapODataServiceRoute("odata/StateExclusions", "odata/StateExclusions", model);
 
       });
 

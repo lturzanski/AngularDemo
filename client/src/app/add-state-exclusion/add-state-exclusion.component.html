@@ -1,10 +1,10 @@
 <rz-content #content1 container="main">
   <div class="row">
     <div class="col-md-12">
-      <rz-form #form0 (cancel)="form0Cancel($event)" (submit)="form0Submit($event)" (loadData)="form0LoadData($event)">
-        <rz-lookuppopup-form-field [data]="getStatesForStateIdResult" property="StateId" [required]="true" textProperty="StateName" title="State" valueProperty="Id" placeholder="Choose State" [count]="getStatesForStateIdCount" [pageSize]="getStatesForStateIdPageSize" requiredText="is required" type="lookuppopup">
+      <rz-form #form0 (cancel)="form0Cancel($event)" (loadData)="form0LoadData($event)" (submit)="form0Submit($event)">
+        <rz-lookuppopup-form-field [count]="getStateExclStatesForStateExcl_StateIdCount" [data]="getStateExclStatesForStateExcl_StateIdResult" [pageSize]="getStateExclStatesForStateExcl_StateIdPageSize" placeholder="Choose State" property="StateExcl_StateId" [required]="true" requiredText="is required" textProperty="StateName" title="State" valueProperty="Id" type="lookuppopup">
         </rz-lookuppopup-form-field>
-        <rz-lookuppopup-form-field [data]="getExclusionsForExclusionIdResult" property="ExclusionId" [required]="true" textProperty="ExclusionName" title="Exclusion" valueProperty="Id" placeholder="Choose Exclusion" [count]="getExclusionsForExclusionIdCount" [pageSize]="getExclusionsForExclusionIdPageSize" requiredText="is required" type="lookuppopup">
+        <rz-lookuppopup-form-field [count]="getStateExclExclusionsForStateExcl_ExclusionIdCount" [data]="getStateExclExclusionsForStateExcl_ExclusionIdResult" [pageSize]="getStateExclExclusionsForStateExcl_ExclusionIdPageSize" placeholder="Choose Exclusion" property="StateExcl_ExclusionId" [required]="true" requiredText="is required" textProperty="ExclusionName" title="Exclusion" valueProperty="Id" type="lookuppopup">
         </rz-lookuppopup-form-field>
       </rz-form>
     </div>

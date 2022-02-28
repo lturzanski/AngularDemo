@@ -23,16 +23,16 @@
                       {
                         "error": [
                           {
-                            "detail": "Unable to create new State!",
+                            "detail": "Unable to create new StateExclState!",
                             "severity": "error",
                             "summary": "Error",
                             "type": "notify"
                           }
                         ],
-                        "name": "StateExclusionsDatabase.createState",
+                        "name": "StateExclusions.createStateExclState",
                         "parameters": [
                           {
-                            "name": "State",
+                            "name": "StateExclState",
                             "value": "${event}"
                           }
                         ],
@@ -51,13 +51,15 @@
                       "property": "StateName",
                       "required": true,
                       "title": "State Name",
-                      "type": "string"
+                      "type": "string",
+                      "requiredText": "is required"
                     },
                     {
                       "property": "StateAbbreviation",
                       "required": true,
                       "title": "State Abbreviation",
-                      "type": "string"
+                      "type": "string",
+                      "requiredText": "is required"
                     }
                   ],
                   "name": "form0",

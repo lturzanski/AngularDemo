@@ -18,7 +18,7 @@ import { ConfigService } from '../config.service';
 import { AddStateExclusionComponent } from '../add-state-exclusion/add-state-exclusion.component';
 import { EditStateExclusionComponent } from '../edit-state-exclusion/edit-state-exclusion.component';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class StateExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -48,10 +48,10 @@ export class StateExclusionGenerated implements AfterViewInit, OnInit, OnDestroy
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
+  stateExclusions: StateExclusionsService;
   parameters: any;
-  getStateExclusionsResult: any;
-  getStateExclusionsCount: any;
+  getStateExclStateExclusionsResult: any;
+  getStateExclStateExclusionsCount: any;
 
   constructor(private injector: Injector) {
   }
@@ -77,7 +77,7 @@ export class StateExclusionGenerated implements AfterViewInit, OnInit, OnDestroy
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -103,28 +103,28 @@ export class StateExclusionGenerated implements AfterViewInit, OnInit, OnDestroy
     this.grid0.load();
   }
 
-  grid0LoadData(event: any) {
-    this.stateExclusionsDatabase.getStateExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, `State,Exclusion`, null, null)
-    .subscribe((result: any) => {
-      this.getStateExclusionsResult = result.value;
-
-      this.getStateExclusionsCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
-    }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load StateExclusions` });
-    });
+  grid0Add(event: any) {
+    this.dialogService.open(AddStateExclusionComponent, { parameters: {}, title: 'Add State Exclusion' });
   }
 
   grid0Delete(event: any) {
-    this.stateExclusionsDatabase.deleteStateExclusion(event.Id)
+    this.stateExclusions.deleteStateExclStateExclusion(event.Id)
     .subscribe((result: any) => {
-      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `StateExclusion deleted!` });
+      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `StateExclStateExclusion deleted!` });
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete StateExclusion` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete StateExclStateExclusion` });
     });
   }
 
-  grid0Add(event: any) {
-    this.dialogService.open(AddStateExclusionComponent, { parameters: {}, title: 'Add State Exclusion' });
+  grid0LoadData(event: any) {
+    this.stateExclusions.getStateExclStateExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, `StateExclState,StateExclExclusion`, null, null)
+    .subscribe((result: any) => {
+      this.getStateExclStateExclusionsResult = result.value;
+
+      this.getStateExclStateExclusionsCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
+    }, (result: any) => {
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load StateExclStateExclusions` });
+    });
   }
 
   grid0RowSelect(event: any) {

@@ -5,7 +5,7 @@
         {
           "name": "pageTitle",
           "size": "H1",
-          "text": "State Exclusions",
+          "text": "State Exclusion",
           "type": "heading"
         },
         {
@@ -25,18 +25,18 @@
                   "clearFilterText": "Clear",
                   "columns": [
                     {
-                      "filterProperty": "State.StateName",
-                      "property": "StateId",
-                      "sortProperty": "State.StateName",
-                      "template": "${data.State?.StateName}",
+                      "filterProperty": "StateExclState.StateName",
+                      "property": "StateExcl_StateId",
+                      "sortProperty": "StateExclState.StateName",
+                      "template": "${data.StateExclState?.StateName}",
                       "title": "State",
                       "type": "string"
                     },
                     {
-                      "filterProperty": "Exclusion.ExclusionName",
-                      "property": "ExclusionId",
-                      "sortProperty": "Exclusion.ExclusionName",
-                      "template": "${data.Exclusion?.ExclusionName}",
+                      "filterProperty": "StateExclExclusion.ExclusionName",
+                      "property": "StateExcl_ExclusionId",
+                      "sortProperty": "StateExclExclusion.ExclusionName",
+                      "template": "${data.StateExclExclusion?.ExclusionName}",
                       "title": "Exclusion",
                       "type": "string"
                     }
@@ -47,8 +47,8 @@
                   "confirmDeleteText": "Are you sure you want to delete this record?",
                   "confirmDeleteTitle": "Confirmation",
                   "containsText": "Contains",
-                  "count": "${getStateExclusionsCount}",
-                  "data": "${getStateExclusionsResult}",
+                  "count": "${getStateExclStateExclusionsCount}",
+                  "data": "${getStateExclStateExclusionsResult}",
                   "emptyText": "No records to display.",
                   "endsWithText": "Ends with",
                   "equalsText": "Equals",
@@ -63,13 +63,13 @@
                       {
                         "error": [
                           {
-                            "detail": "Unable to delete StateExclusion",
+                            "detail": "Unable to delete StateExclStateExclusion",
                             "severity": "error",
                             "summary": "Error",
                             "type": "notify"
                           }
                         ],
-                        "name": "StateExclusionsDatabase.deleteStateExclusion",
+                        "name": "StateExclusions.deleteStateExclStateExclusion",
                         "parameters": [
                           {
                             "name": "Id",
@@ -78,7 +78,7 @@
                         ],
                         "then": [
                           {
-                            "detail": "StateExclusion deleted!",
+                            "detail": "StateExclStateExclusion deleted!",
                             "severity": "success",
                             "summary": "Success",
                             "type": "notify"
@@ -91,13 +91,13 @@
                       {
                         "error": [
                           {
-                            "detail": "Unable to load StateExclusions",
+                            "detail": "Unable to load StateExclStateExclusions",
                             "severity": "error",
                             "summary": "Error",
                             "type": "notify"
                           }
                         ],
-                        "name": "StateExclusionsDatabase.getStateExclusions",
+                        "name": "StateExclusions.getStateExclStateExclusions",
                         "parameters": [
                           {
                             "name": "$top",
@@ -121,17 +121,17 @@
                           },
                           {
                             "name": "$expand",
-                            "value": "State,Exclusion"
+                            "value": "StateExclState,StateExclExclusion"
                           }
                         ],
                         "then": [
                           {
-                            "name": "getStateExclusionsResult",
+                            "name": "getStateExclStateExclusionsResult",
                             "type": "set",
                             "value": "${result.value}"
                           },
                           {
-                            "name": "getStateExclusionsCount",
+                            "name": "getStateExclStateExclusionsCount",
                             "type": "set",
                             "value": "event.top != null && event.skip != null ? result['@odata.count'] : ${result.value.length}"
                           }
@@ -182,5 +182,5 @@
     ]
   },
   "layout": "Main",
-  "name": "StateExclusion"
+  "name": "State Exclusion"
 }

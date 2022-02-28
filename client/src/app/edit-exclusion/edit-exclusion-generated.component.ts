@@ -15,7 +15,7 @@ import { FormComponent } from '@radzen/angular/dist/form';
 
 import { ConfigService } from '../config.service';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -44,8 +44,8 @@ export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy 
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
-  exclusion: any;
+  stateExclusions: StateExclusionsService;
+  stateexclexclusion: any;
   parameters: any;
 
   constructor(private injector: Injector) {
@@ -72,7 +72,7 @@ export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy 
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -95,9 +95,9 @@ export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy 
 
 
   load() {
-    this.stateExclusionsDatabase.getExclusionById(null, this.parameters.Id)
+    this.stateExclusions.getStateExclExclusionById(null, this.parameters.Id)
     .subscribe((result: any) => {
-      this.exclusion = result;
+      this.stateexclexclusion = result;
     }, (result: any) => {
 
     });
@@ -112,7 +112,7 @@ export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy 
   }
 
   form0Submit(event: any) {
-    this.stateExclusionsDatabase.updateExclusion(null, this.parameters.Id, event)
+    this.stateExclusions.updateStateExclExclusion(null, this.parameters.Id, event)
     .subscribe((result: any) => {
       if (this.dialogRef) {
         this.dialogRef.close();
@@ -120,7 +120,7 @@ export class EditExclusionGenerated implements AfterViewInit, OnInit, OnDestroy 
         this._location.back();
       }
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to update Exclusion` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to update StateExclExclusion` });
     });
   }
 }

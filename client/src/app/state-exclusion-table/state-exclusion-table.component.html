@@ -1,0 +1,20 @@
+<rz-content #content1 container="main">
+  <rz-heading #pageTitle size="H1" text="State Exclusion Table">
+  </rz-heading>
+  <div class="row">
+    <div class="col-md-12">
+      <rz-grid #grid0 addText="Add" [allowAdd]="false" [allowDelete]="false" [allowFiltering]="true" [allowMultiSorting]="false" [allowPaging]="true" [allowSorting]="true" applyFilterText="Apply" clearFilterText="Clear" [confirmDelete]="false" confirmDeleteCancelText="Cancel" confirmDeleteOkText="Ok" confirmDeleteText="Are you sure you want to delete this record?" confirmDeleteTitle="Confirmation" containsText="Contains" [count]="getStateExclusionViewsCount" [data]="getStateExclusionViewsResult" emptyText="No records to display." endsWithText="Ends with" equalsText="Equals" greaterThanOrEqualsText="Greater than or equals" greaterThanText="Greater than" lessThanOrEqualsText="Less than or equals" lessThanText="Less than" notEqualsText="Not equals" startsWithText="Starts with" (loadData)="grid0LoadData($event)">
+        <rz-grid-column property="StateName" title="State Name" type="string">
+        </rz-grid-column>
+        <rz-grid-column property="StateAbbreviation" title="State Abbreviation" type="string">
+        </rz-grid-column>
+        <rz-grid-column property="ExclusionName" title="Exclusion Name" type="string">
+        </rz-grid-column>
+        <rz-grid-column property="ExclusionDescription" title="Exclusion Description" type="string">
+        </rz-grid-column>
+        <rz-grid-column format="date-time" formatString="shortDate" property="ExclusionDate" title="Exclusion Date" type="string">
+        </rz-grid-column>
+      </rz-grid>
+    </div>
+  </div>
+</rz-content>

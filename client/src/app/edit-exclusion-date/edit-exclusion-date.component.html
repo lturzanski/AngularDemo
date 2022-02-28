@@ -1,10 +1,10 @@
 <rz-content #content1 container="main">
   <div class="row">
     <div class="col-md-12">
-      <rz-form #form0 [data]="exclusiondate" *ngIf="exclusiondate" (cancel)="form0Cancel($event)" (submit)="form0Submit($event)" (loadData)="form0LoadData($event)">
-        <rz-date-form-field property="Date" [required]="true" title="Date" requiredText="is required" type="date">
+      <rz-form #form0 [data]="stateexclexclusiondate" *ngIf="stateexclexclusiondate" (cancel)="form0Cancel($event)" (loadData)="form0LoadData($event)" (submit)="form0Submit($event)">
+        <rz-date-form-field property="ExclusionDate" [required]="true" requiredText="is required" title="Exclusion Date" type="date">
         </rz-date-form-field>
-        <rz-lookuppopup-form-field [data]="getExclusionsForExclusionIdResult" property="ExclusionId" [required]="true" textProperty="ExclusionName" title="Exclusion" valueProperty="Id" placeholder="Choose Exclusion" [count]="getExclusionsForExclusionIdCount" [pageSize]="getExclusionsForExclusionIdPageSize" [value]="getByExclusionsForExclusionIdResult" requiredText="is required" type="lookuppopup">
+        <rz-lookuppopup-form-field [count]="getStateExclExclusionsForStateExcl_ExclusionIdCount" [data]="getStateExclExclusionsForStateExcl_ExclusionIdResult" [pageSize]="getStateExclExclusionsForStateExcl_ExclusionIdPageSize" placeholder="Choose Exclusion" property="StateExcl_ExclusionId" [required]="true" requiredText="is required" textProperty="ExclusionName" title="Exclusion" [value]="getByStateExclExclusionsForStateExcl_ExclusionIdResult" valueProperty="Id" type="lookuppopup">
         </rz-lookuppopup-form-field>
       </rz-form>
     </div>

@@ -18,7 +18,7 @@ import { ConfigService } from '../config.service';
 import { AddExclusionComponent } from '../add-exclusion/add-exclusion.component';
 import { EditExclusionComponent } from '../edit-exclusion/edit-exclusion.component';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class ExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -48,10 +48,10 @@ export class ExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
+  stateExclusions: StateExclusionsService;
   parameters: any;
-  getExclusionsResult: any;
-  getExclusionsCount: any;
+  getStateExclExclusionsResult: any;
+  getStateExclExclusionsCount: any;
 
   constructor(private injector: Injector) {
   }
@@ -77,7 +77,7 @@ export class ExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -104,22 +104,22 @@ export class ExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   }
 
   grid0LoadData(event: any) {
-    this.stateExclusionsDatabase.getExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, null, null, null)
+    this.stateExclusions.getStateExclExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, null, null, null)
     .subscribe((result: any) => {
-      this.getExclusionsResult = result.value;
+      this.getStateExclExclusionsResult = result.value;
 
-      this.getExclusionsCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
+      this.getStateExclExclusionsCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load Exclusions` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load StateExclExclusions` });
     });
   }
 
   grid0Delete(event: any) {
-    this.stateExclusionsDatabase.deleteExclusion(event.Id)
+    this.stateExclusions.deleteStateExclExclusion(event.Id)
     .subscribe((result: any) => {
-      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `Exclusion deleted!` });
+      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `StateExclExclusion deleted!` });
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete Exclusion` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete StateExclExclusion` });
     });
   }
 

@@ -15,7 +15,7 @@ import { FormComponent } from '@radzen/angular/dist/form';
 
 import { ConfigService } from '../config.service';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -44,13 +44,13 @@ export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDest
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
-  getStatesForStateIdPageSize: any;
-  getStatesForStateIdResult: any;
-  getStatesForStateIdCount: any;
-  getExclusionsForExclusionIdPageSize: any;
-  getExclusionsForExclusionIdResult: any;
-  getExclusionsForExclusionIdCount: any;
+  stateExclusions: StateExclusionsService;
+  getStateExclStatesForStateExcl_StateIdPageSize: any;
+  getStateExclStatesForStateExcl_StateIdResult: any;
+  getStateExclStatesForStateExcl_StateIdCount: any;
+  getStateExclExclusionsForStateExcl_ExclusionIdPageSize: any;
+  getStateExclExclusionsForStateExcl_ExclusionIdResult: any;
+  getStateExclExclusionsForStateExcl_ExclusionIdCount: any;
   parameters: any;
 
   constructor(private injector: Injector) {
@@ -77,7 +77,7 @@ export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDest
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -100,24 +100,24 @@ export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDest
 
 
   load() {
-    this.getStatesForStateIdPageSize = 10;
+    this.getStateExclStatesForStateExcl_StateIdPageSize = 10;
 
-    this.stateExclusionsDatabase.getStates(null, this.getStatesForStateIdPageSize, 0, null, true, null, null, null)
+    this.stateExclusions.getStateExclStates(null, this.getStateExclStatesForStateExcl_StateIdPageSize, 0, null, true, null, null, null)
     .subscribe((result: any) => {
-      this.getStatesForStateIdResult = result.value;
+      this.getStateExclStatesForStateExcl_StateIdResult = result.value;
 
-      this.getStatesForStateIdCount = result['@odata.count'];
+      this.getStateExclStatesForStateExcl_StateIdCount = result['@odata.count'];
     }, (result: any) => {
 
     });
 
-    this.getExclusionsForExclusionIdPageSize = 10;
+    this.getStateExclExclusionsForStateExcl_ExclusionIdPageSize = 10;
 
-    this.stateExclusionsDatabase.getExclusions(null, this.getExclusionsForExclusionIdPageSize, 0, null, true, null, null, null)
+    this.stateExclusions.getStateExclExclusions(null, this.getStateExclExclusionsForStateExcl_ExclusionIdPageSize, 0, null, true, null, null, null)
     .subscribe((result: any) => {
-      this.getExclusionsForExclusionIdResult = result.value;
+      this.getStateExclExclusionsForStateExcl_ExclusionIdResult = result.value;
 
-      this.getExclusionsForExclusionIdCount = result['@odata.count'];
+      this.getStateExclExclusionsForStateExcl_ExclusionIdCount = result['@odata.count'];
     }, (result: any) => {
 
     });
@@ -131,8 +131,32 @@ export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDest
     }
   }
 
+  form0LoadData(event: any) {
+    if (event.property == 'StateExcl_StateId') {
+          this.stateExclusions.getStateExclStates(`${event.filter}`, event.top, event.skip, `${event.orderby}`, true, null, null, null)
+      .subscribe((result: any) => {
+          this.getStateExclStatesForStateExcl_StateIdResult = result.value;
+
+      this.getStateExclStatesForStateExcl_StateIdCount = result['@odata.count'];
+      }, (result: any) => {
+    
+      });
+    }
+
+    if (event.property == 'StateExcl_ExclusionId') {
+          this.stateExclusions.getStateExclExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, true, null, null, null)
+      .subscribe((result: any) => {
+          this.getStateExclExclusionsForStateExcl_ExclusionIdResult = result.value;
+
+      this.getStateExclExclusionsForStateExcl_ExclusionIdCount = result['@odata.count'];
+      }, (result: any) => {
+    
+      });
+    }
+  }
+
   form0Submit(event: any) {
-    this.stateExclusionsDatabase.createStateExclusion(null, event)
+    this.stateExclusions.createStateExclStateExclusion(null, event)
     .subscribe((result: any) => {
       if (this.dialogRef) {
         this.dialogRef.close();
@@ -140,31 +164,7 @@ export class AddStateExclusionGenerated implements AfterViewInit, OnInit, OnDest
         this._location.back();
       }
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to create new StateExclusion!` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to create new StateExclStateExclusion!` });
     });
-  }
-
-  form0LoadData(event: any) {
-    if (event.property == 'StateId') {
-          this.stateExclusionsDatabase.getStates(`${event.filter}`, event.top, event.skip, `${event.orderby}`, true, null, null, null)
-      .subscribe((result: any) => {
-          this.getStatesForStateIdResult = result.value;
-
-      this.getStatesForStateIdCount = result['@odata.count'];
-      }, (result: any) => {
-    
-      });
-    }
-
-    if (event.property == 'ExclusionId') {
-          this.stateExclusionsDatabase.getExclusions(`${event.filter}`, event.top, event.skip, `${event.orderby}`, true, null, null, null)
-      .subscribe((result: any) => {
-          this.getExclusionsForExclusionIdResult = result.value;
-
-      this.getExclusionsForExclusionIdCount = result['@odata.count'];
-      }, (result: any) => {
-    
-      });
-    }
   }
 }

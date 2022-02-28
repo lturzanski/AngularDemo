@@ -47,28 +47,6 @@
     {
       "components": [
         {
-          "items": [
-            {
-              "path": "state-exclusion-view",
-              "text": "State Exclusions Table"
-            },
-            {
-              "path": "state",
-              "text": "States"
-            },
-            {
-              "path": "exclusion",
-              "text": "Exclusions"
-            },
-            {
-              "path": "exclusion-date",
-              "text": "Exclusion Dates"
-            },
-            {
-              "path": "state-exclusion",
-              "text": "State Exclusions"
-            }
-          ],
           "name": "panelmenu0",
           "style": {
             "height": "100%"

@@ -18,7 +18,7 @@ import { ConfigService } from '../config.service';
 import { AddExclusionDateComponent } from '../add-exclusion-date/add-exclusion-date.component';
 import { EditExclusionDateComponent } from '../edit-exclusion-date/edit-exclusion-date.component';
 
-import { StateExclusionsDatabaseService } from '../state-exclusions-database.service';
+import { StateExclusionsService } from '../state-exclusions.service';
 
 export class ExclusionDateGenerated implements AfterViewInit, OnInit, OnDestroy {
   // Components
@@ -48,10 +48,10 @@ export class ExclusionDateGenerated implements AfterViewInit, OnInit, OnDestroy 
 
   _subscription: Subscription;
 
-  stateExclusionsDatabase: StateExclusionsDatabaseService;
+  stateExclusions: StateExclusionsService;
   parameters: any;
-  getExclusionDatesResult: any;
-  getExclusionDatesCount: any;
+  getStateExclExclusionDatesResult: any;
+  getStateExclExclusionDatesCount: any;
 
   constructor(private injector: Injector) {
   }
@@ -77,7 +77,7 @@ export class ExclusionDateGenerated implements AfterViewInit, OnInit, OnDestroy 
 
     this.httpClient = this.injector.get(HttpClient);
 
-    this.stateExclusionsDatabase = this.injector.get(StateExclusionsDatabaseService);
+    this.stateExclusions = this.injector.get(StateExclusionsService);
   }
 
   ngAfterViewInit() {
@@ -108,22 +108,22 @@ export class ExclusionDateGenerated implements AfterViewInit, OnInit, OnDestroy 
   }
 
   grid0Delete(event: any) {
-    this.stateExclusionsDatabase.deleteExclusionDate(event.Id)
+    this.stateExclusions.deleteStateExclExclusionDate(event.Id)
     .subscribe((result: any) => {
-      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `ExclusionDate deleted!` });
+      this.notificationService.notify({ severity: "success", summary: `Success`, detail: `StateExclExclusionDate deleted!` });
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete ExclusionDate` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to delete StateExclExclusionDate` });
     });
   }
 
   grid0LoadData(event: any) {
-    this.stateExclusionsDatabase.getExclusionDates(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, `Exclusion`, null, null)
+    this.stateExclusions.getStateExclExclusionDates(`${event.filter}`, event.top, event.skip, `${event.orderby}`, event.top != null && event.skip != null, `StateExclExclusion`, null, null)
     .subscribe((result: any) => {
-      this.getExclusionDatesResult = result.value;
+      this.getStateExclExclusionDatesResult = result.value;
 
-      this.getExclusionDatesCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
+      this.getStateExclExclusionDatesCount = event.top != null && event.skip != null ? result['@odata.count'] : result.value.length;
     }, (result: any) => {
-      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load ExclusionDates` });
+      this.notificationService.notify({ severity: "error", summary: `Error`, detail: `Unable to load StateExclExclusionDates` });
     });
   }
 

@@ -1,42 +1,118 @@
 {
   "components": [
     {
-      "type": "content",
-      "container": "main",
       "components": [
         {
-          "type": "row",
           "components": [
             {
-              "type": "col",
               "class": "col-md-12",
               "components": [
                 {
-                  "data": "${stateexclusion}",
+                  "data": "${stateexclstateexclusion}",
                   "events": {
                     "cancel": [
                       {
                         "type": "back"
                       }
                     ],
+                    "loadData": [
+                      {
+                        "condition": "event.property == 'StateExcl_StateId'",
+                        "name": "StateExclusions.getStateExclStates",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "${event.top}"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "${event.skip}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": "${event.filter}"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "true"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStateExclStatesForStateExcl_StateIdResult",
+                            "type": "set",
+                            "value": "${result.value}"
+                          },
+                          {
+                            "name": "getStateExclStatesForStateExcl_StateIdCount",
+                            "type": "set",
+                            "value": "result['@odata.count']"
+                          }
+                        ],
+                        "type": "invoke"
+                      },
+                      {
+                        "condition": "event.property == 'StateExcl_ExclusionId'",
+                        "name": "StateExclusions.getStateExclExclusions",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "${event.top}"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "${event.skip}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": "${event.filter}"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "true"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStateExclExclusionsForStateExcl_ExclusionIdResult",
+                            "type": "set",
+                            "value": "${result.value}"
+                          },
+                          {
+                            "name": "getStateExclExclusionsForStateExcl_ExclusionIdCount",
+                            "type": "set",
+                            "value": "result['@odata.count']"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
                     "submit": [
                       {
                         "error": [
                           {
-                            "detail": "Unable to update StateExclusion",
+                            "detail": "Unable to update StateExclStateExclusion",
                             "severity": "error",
                             "summary": "Error",
                             "type": "notify"
                           }
                         ],
-                        "name": "StateExclusionsDatabase.updateStateExclusion",
+                        "name": "StateExclusions.updateStateExclStateExclusion",
                         "parameters": [
                           {
                             "name": "Id",
                             "value": "${parameters.Id}"
                           },
                           {
-                            "name": "StateExclusion",
+                            "name": "StateExclStateExclusion",
                             "value": "${event}"
                           }
                         ],
@@ -47,131 +123,58 @@
                         ],
                         "type": "invoke"
                       }
-                    ],
-                    "loadData": [
-                      {
-                        "name": "StateExclusionsDatabase.getStates",
-                        "condition": "event.property == 'StateId'",
-                        "parameters": [
-                          {
-                            "name": "$top",
-                            "value": "${event.top}"
-                          },
-                          {
-                            "name": "$skip",
-                            "value": "${event.skip}"
-                          },
-                          {
-                            "name": "$orderby",
-                            "value": "${event.orderby}"
-                          },
-                          {
-                            "name": "$filter",
-                            "value": "${event.filter}"
-                          },
-                          {
-                            "name": "$count",
-                            "value": "true"
-                          }
-                        ],
-                        "then": [
-                          {
-                            "name": "getStatesForStateIdResult",
-                            "type": "set",
-                            "value": "${result.value}"
-                          },
-                          {
-                            "name": "getStatesForStateIdCount",
-                            "type": "set",
-                            "value": "result['@odata.count']"
-                          }
-                        ],
-                        "type": "invoke"
-                      },
-                      {
-                        "name": "StateExclusionsDatabase.getExclusions",
-                        "condition": "event.property == 'ExclusionId'",
-                        "parameters": [
-                          {
-                            "name": "$top",
-                            "value": "${event.top}"
-                          },
-                          {
-                            "name": "$skip",
-                            "value": "${event.skip}"
-                          },
-                          {
-                            "name": "$orderby",
-                            "value": "${event.orderby}"
-                          },
-                          {
-                            "name": "$filter",
-                            "value": "${event.filter}"
-                          },
-                          {
-                            "name": "$count",
-                            "value": "true"
-                          }
-                        ],
-                        "then": [
-                          {
-                            "name": "getExclusionsForExclusionIdResult",
-                            "type": "set",
-                            "value": "${result.value}"
-                          },
-                          {
-                            "name": "getExclusionsForExclusionIdCount",
-                            "type": "set",
-                            "value": "result['@odata.count']"
-                          }
-                        ],
-                        "type": "invoke"
-                      }
                     ]
                   },
                   "fields": [
                     {
-                      "data": "${getStatesForStateIdResult}",
-                      "property": "StateId",
+                      "count": "${getStateExclStatesForStateExcl_StateIdCount}",
+                      "data": "${getStateExclStatesForStateExcl_StateIdResult}",
+                      "pageSize": "${getStateExclStatesForStateExcl_StateIdPageSize}",
+                      "placeholder": "Choose State",
+                      "property": "StateExcl_StateId",
                       "required": true,
+                      "requiredText": "is required",
                       "textProperty": "StateName",
                       "title": "State",
                       "type": "lookuppopup",
-                      "valueProperty": "Id",
-                      "placeholder": "Choose State",
-                      "count": "${getStatesForStateIdCount}",
-                      "pageSize": "${getStatesForStateIdPageSize}",
-                      "value": "${getByStatesForStateIdResult}"
+                      "value": "${getByStateExclStatesForStateExcl_StateIdResult}",
+                      "valueProperty": "Id"
                     },
                     {
-                      "data": "${getExclusionsForExclusionIdResult}",
-                      "property": "ExclusionId",
+                      "count": "${getStateExclExclusionsForStateExcl_ExclusionIdCount}",
+                      "data": "${getStateExclExclusionsForStateExcl_ExclusionIdResult}",
+                      "pageSize": "${getStateExclExclusionsForStateExcl_ExclusionIdPageSize}",
+                      "placeholder": "Choose Exclusion",
+                      "property": "StateExcl_ExclusionId",
                       "required": true,
+                      "requiredText": "is required",
                       "textProperty": "ExclusionName",
                       "title": "Exclusion",
                       "type": "lookuppopup",
-                      "valueProperty": "Id",
-                      "placeholder": "Choose Exclusion",
-                      "count": "${getExclusionsForExclusionIdCount}",
-                      "pageSize": "${getExclusionsForExclusionIdPageSize}",
-                      "value": "${getByExclusionsForExclusionIdResult}"
+                      "value": "${getByStateExclExclusionsForStateExcl_ExclusionIdResult}",
+                      "valueProperty": "Id"
                     }
                   ],
                   "name": "form0",
                   "type": "form",
-                  "visible": "stateexclusion"
+                  "visible": "stateexclstateexclusion"
                 }
-              ]
+              ],
+              "type": "col"
             }
-          ]
+          ],
+          "type": "row"
         }
-      ]
+      ],
+      "container": "main",
+      "type": "content"
     }
   ],
   "events": {
     "load": [
       {
-        "name": "StateExclusionsDatabase.getStateExclusionById",
+        "error": [],
+        "name": "StateExclusions.getStateExclStateExclusionById",
         "parameters": [
           {
             "name": "Id",
@@ -180,61 +183,60 @@
         ],
         "then": [
           {
-            "name": "stateexclusion",
+            "name": "stateexclstateexclusion",
             "type": "set",
             "value": "${result}"
           },
           {
-            "name": "StateExclusionsDatabase.getStateById",
+            "condition": "this.stateexclstateexclusion.StateExcl_StateId != null",
+            "name": "StateExclusions.getStateExclStateById",
             "parameters": [
               {
                 "name": "Id",
-                "value": "${this.stateexclusion.StateId}"
+                "value": "${this.stateexclstateexclusion.StateExcl_StateId}"
               }
             ],
             "then": [
               {
-                "name": "getByStatesForStateIdResult",
+                "name": "getByStateExclStatesForStateExcl_StateIdResult",
                 "type": "set",
                 "value": "${result}"
               }
             ],
-            "condition": "this.stateexclusion.StateId != null",
             "type": "invoke"
           },
           {
-            "name": "StateExclusionsDatabase.getExclusionById",
+            "condition": "this.stateexclstateexclusion.StateExcl_ExclusionId != null",
+            "name": "StateExclusions.getStateExclExclusionById",
             "parameters": [
               {
                 "name": "Id",
-                "value": "${this.stateexclusion.ExclusionId}"
+                "value": "${this.stateexclstateexclusion.StateExcl_ExclusionId}"
               }
             ],
             "then": [
               {
-                "name": "getByExclusionsForExclusionIdResult",
+                "name": "getByStateExclExclusionsForStateExcl_ExclusionIdResult",
                 "type": "set",
                 "value": "${result}"
               }
             ],
-            "condition": "this.stateexclusion.ExclusionId != null",
             "type": "invoke"
           }
         ],
-        "error": [],
         "type": "invoke"
       },
       {
-        "name": "getStatesForStateIdPageSize",
+        "name": "getStateExclStatesForStateExcl_StateIdPageSize",
         "type": "set",
         "value": "10"
       },
       {
-        "name": "StateExclusionsDatabase.getStates",
+        "name": "StateExclusions.getStateExclStates",
         "parameters": [
           {
             "name": "$top",
-            "value": "${getStatesForStateIdPageSize}"
+            "value": "${getStateExclStatesForStateExcl_StateIdPageSize}"
           },
           {
             "name": "$skip",
@@ -247,12 +249,12 @@
         ],
         "then": [
           {
-            "name": "getStatesForStateIdResult",
+            "name": "getStateExclStatesForStateExcl_StateIdResult",
             "type": "set",
             "value": "${result.value}"
           },
           {
-            "name": "getStatesForStateIdCount",
+            "name": "getStateExclStatesForStateExcl_StateIdCount",
             "type": "set",
             "value": "result['@odata.count']"
           }
@@ -260,16 +262,16 @@
         "type": "invoke"
       },
       {
-        "name": "getExclusionsForExclusionIdPageSize",
+        "name": "getStateExclExclusionsForStateExcl_ExclusionIdPageSize",
         "type": "set",
         "value": "10"
       },
       {
-        "name": "StateExclusionsDatabase.getExclusions",
+        "name": "StateExclusions.getStateExclExclusions",
         "parameters": [
           {
             "name": "$top",
-            "value": "${getExclusionsForExclusionIdPageSize}"
+            "value": "${getStateExclExclusionsForStateExcl_ExclusionIdPageSize}"
           },
           {
             "name": "$skip",
@@ -282,12 +284,12 @@
         ],
         "then": [
           {
-            "name": "getExclusionsForExclusionIdResult",
+            "name": "getStateExclExclusionsForStateExcl_ExclusionIdResult",
             "type": "set",
             "value": "${result.value}"
           },
           {
-            "name": "getExclusionsForExclusionIdCount",
+            "name": "getStateExclExclusionsForStateExcl_ExclusionIdCount",
             "type": "set",
             "value": "result['@odata.count']"
           }
@@ -296,6 +298,6 @@
       }
     ]
   },
-  "name": "Edit State Exclusion",
-  "layout": "Main"
+  "layout": "Main",
+  "name": "Edit State Exclusion"
 }
